@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diabetes Prediction System</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Diabetes Prediction System</h1>
+        <p>Enter your medical information to predict your risk of diabetes</p>
+      </header>
+
+      <div class="main-content">
+        <div class="form-container">
+          <form id="prediction-form" action="/predict" method="POST">
+            <div class="form-group">
+              <label for="Pregnancies">Number of Pregnancies</label>
+              <input
+                type="number"
+                id="Pregnancies"
+                name="Pregnancies"
+                min="0"
+                step="1"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="Glucose">Glucose Level (mg/dL)</label>
+              <input
+                type="number"
+                id="Glucose"
+                name="Glucose"
+                min="0"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="BloodPressure">Blood Pressure (mm Hg)</label>
+              <input
+                type="number"
+                id="BloodPressure"
+                name="BloodPressure"
+                min="0"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="SkinThickness">Skin Thickness (mm)</label>
+              <input
+                type="number"
+                id="SkinThickness"
+                name="SkinThickness"
+                min="0"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="Insulin">Insulin Level (mu U/ml)</label>
+              <input
+                type="number"
+                id="Insulin"
+                name="Insulin"
+                min="0"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="BMI">BMI (weight in kg/(height in m)²)</label>
+              <input
+                type="number"
+                id="BMI"
+                name="BMI"
+                min="0"
+                step="0.1"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="DiabetesPedigreeFunction"
+                >Diabetes Pedigree Function</label
+              >
+              <input
+                type="number"
+                id="DiabetesPedigreeFunction"
+                name="DiabetesPedigreeFunction"
+                min="0"
+                step="0.001"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="Age">Age (years)</label>
+              <input type="number" id="Age" name="Age" min="0" required />
+            </div>
+
+            <button type="submit" class="submit-btn">Predict</button>
+          </form>
+        </div>
+
+        <div class="results-container" id="results">
+          <h2>Prediction Results</h2>
+          <div class="prediction-result">
+            <div class="result-box" id="result-box">
+              <h3>Prediction</h3>
+              <p id="prediction-text"></p>
+              <div class="probability-meter">
+                <div class="probability-bar" id="probability-bar"></div>
+              </div>
+              <p id="probability-text"></p>
+            </div>
+          </div>
+
+          <div class="explanation">
+            <h3>Feature Importance</h3>
+            <p>
+              This chart shows how each factor contributes to the prediction:
+            </p>
+            <div class="shap-plot">
+              <img
+                id="shap-plot"
+                src="{{ url_for('static', filename='shap_summary_plot.png') }}"
+                alt="SHAP Values Plot"
+              />
+            </div>
+
+            <h3>Individual Prediction Explanation</h3>
+            <p>
+              This chart shows how your specific values influenced the
+              prediction:
+            </p>
+            <div class="force-plot">
+              <img
+                id="force-plot"
+                src="{{ url_for('static', filename='feature_importance.png') }}"
+                alt="Individual Explanation"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
